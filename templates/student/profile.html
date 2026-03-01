@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h3 class="mb-4"><i class="bi bi-person me-2 text-primary"></i>My Profile</h3>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="name" class="form-control" value="{{ student.name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ student.email }}" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" class="form-control" value="{{ student.phone }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Branch</label>
+                        <select name="branch" class="form-select">
+                            {% for b in ['Computer Science','Information Technology','Electronics','Mechanical','Civil','Electrical','Other'] %}
+                            <option {% if student.branch == b %}selected{% endif %}>{{ b }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">CGPA</label>
+                        <input type="number" step="0.01" min="0" max="10" name="cgpa" class="form-control" value="{{ student.cgpa }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Graduation Year</label>
+                        <input type="number" name="graduation_year" class="form-control" value="{{ student.graduation_year }}">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Skills</label>
+                        <input type="text" name="skills" class="form-control" value="{{ student.skills or '' }}"
+                               placeholder="Python, Java, SQL...">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Bio</label>
+                        <textarea name="bio" class="form-control" rows="3">{{ student.bio or '' }}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Upload Resume (PDF/DOC)</label>
+                        <input type="file" name="resume" class="form-control" accept=".pdf,.doc,.docx">
+                        {% if student.resume_path %}
+                        <div class="mt-2">
+                            <a href="/static/uploads/{{ student.resume_path }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-file-pdf me-1"></i>View Current Resume
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

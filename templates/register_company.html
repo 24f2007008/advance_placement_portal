@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Company Registration{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-3">
+    <div class="col-md-7">
+        <div class="card p-4">
+            <div class="card-body">
+                <h3 class="mb-4"><i class="bi bi-building-add text-primary me-2"></i>Company Registration</h3>
+                <form method="POST" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Company Name *</label>
+                            <input type="text" name="company_name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email *</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Password *</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">HR Contact *</label>
+                            <input type="text" name="hr_contact" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Website</label>
+                            <input type="url" name="website" class="form-control" placeholder="https://...">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Industry</label>
+                            <select name="industry" class="form-select">
+                                <option value="">Select Industry</option>
+                                <option>IT / Software</option>
+                                <option>Finance</option>
+                                <option>Manufacturing</option>
+                                <option>Consulting</option>
+                                <option>Healthcare</option>
+                                <option>E-Commerce</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Company Description</label>
+                            <textarea name="description" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100">Submit for Approval</button>
+                        </div>
+                        <div class="col-12 text-center">
+                            <a href="/login">Already registered? Login</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

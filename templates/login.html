@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Login - Placement Portal{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-5">
+        <div class="card p-4">
+            <div class="card-body">
+                <h3 class="text-center mb-4"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i>Login</h3>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Login As</label>
+                        <select name="role" class="form-select" required>
+                            <option value="admin">Admin</option>
+                            <option value="company">Company</option>
+                            <option value="student" selected>Student</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required placeholder="Enter email">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <hr>
+                <p class="text-center text-muted mb-0">New here?
+                    <a href="/register/student">Register as Student</a> |
+                    <a href="/register/company">Register as Company</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

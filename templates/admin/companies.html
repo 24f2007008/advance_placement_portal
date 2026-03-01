@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Manage Companies{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-building me-2 text-primary"></i>Companies</h2>
+    <form class="d-flex" method="GET">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search by name or ID" value="{{ q }}">
+        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th><th>Company</th><th>Email</th><th>Industry</th>
+                    <th>HR Contact</th><th>Status</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in companies %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td><strong>{{ c.company_name }}</strong></td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.industry or '-' }}</td>
+                    <td>{{ c.hr_contact }}</td>
+                    <td><span class="badge badge-{{ c.approval_status }}">{{ c.approval_status|capitalize }}</span></td>
+                    <td>
+                        {% if c.approval_status == 'pending' %}
+                        <a href="/admin/company/{{ c.id }}/action/approve" class="btn btn-success btn-sm">Approve</a>
+                        <a href="/admin/company/{{ c.id }}/action/reject" class="btn btn-danger btn-sm">Reject</a>
+                        {% elif c.approval_status == 'approved' %}
+                        <a href="/admin/company/{{ c.id }}/action/blacklist" class="btn btn-warning btn-sm">Blacklist</a>
+                        {% elif c.approval_status == 'blacklisted' %}
+                        <a href="/admin/company/{{ c.id }}/action/approve" class="btn btn-success btn-sm">Reactivate</a>
+                        {% endif %}
+                        <a href="/admin/company/{{ c.id }}/action/delete" class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this company?')">Delete</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="7" class="text-center text-muted py-4">No companies found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

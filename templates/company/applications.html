@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Drive Applications{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2><i class="bi bi-people me-2 text-primary"></i>{{ drive.job_title }}</h2>
+        <p class="text-muted mb-0">{{ apps|length }} applications received</p>
+    </div>
+    <a href="/company/dashboard" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Student</th><th>Email</th><th>Branch</th><th>CGPA</th>
+                    <th>Applied Date</th><th>Resume</th><th>Status</th><th>Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in apps %}
+                <tr>
+                    <td><strong>{{ a.name }}</strong></td>
+                    <td>{{ a.email }}</td>
+                    <td>{{ a.branch }}</td>
+                    <td>{{ a.cgpa }}</td>
+                    <td>{{ a.application_date }}</td>
+                    <td>
+                        {% if a.resume_path %}
+                        <a href="/static/uploads/{{ a.resume_path }}" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-file-pdf"></i> View
+                        </a>
+                        {% else %}
+                        <span class="text-muted small">None</span>
+                        {% endif %}
+                    </td>
+                    <td><span class="badge badge-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+                    <td>
+                        <form method="POST" action="/company/application/{{ a.id }}/status" class="d-flex gap-1">
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="applied" {% if a.status=='applied' %}selected{% endif %}>Applied</option>
+                                <option value="shortlisted" {% if a.status=='shortlisted' %}selected{% endif %}>Shortlisted</option>
+                                <option value="selected" {% if a.status=='selected' %}selected{% endif %}>Selected</option>
+                                <option value="rejected" {% if a.status=='rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8" class="text-center text-muted py-4">No applications yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

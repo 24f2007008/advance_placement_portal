@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Manage Drives{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-briefcase me-2 text-warning"></i>Placement Drives</h2>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th><th>Company</th><th>Job Title</th><th>Deadline</th>
+                    <th>Salary</th><th>Location</th><th>Status</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in drives %}
+                <tr>
+                    <td>{{ d.id }}</td>
+                    <td>{{ d.company_name }}</td>
+                    <td><strong>{{ d.job_title }}</strong></td>
+                    <td>{{ d.application_deadline }}</td>
+                    <td>{{ d.salary or '-' }}</td>
+                    <td>{{ d.location or '-' }}</td>
+                    <td><span class="badge badge-{{ d.status }}">{{ d.status|capitalize }}</span></td>
+                    <td>
+                        {% if d.status == 'pending' %}
+                        <a href="/admin/drive/{{ d.id }}/action/approve" class="btn btn-success btn-sm">Approve</a>
+                        <a href="/admin/drive/{{ d.id }}/action/reject" class="btn btn-danger btn-sm">Reject</a>
+                        {% elif d.status == 'approved' %}
+                        <a href="/admin/drive/{{ d.id }}/action/close" class="btn btn-secondary btn-sm">Close</a>
+                        {% endif %}
+                        <a href="/admin/drive/{{ d.id }}/action/delete" class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this drive?')">Del</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8" class="text-center text-muted py-4">No drives found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

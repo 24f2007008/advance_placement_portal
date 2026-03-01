@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Edit Drive{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h3 class="mb-4"><i class="bi bi-pencil-square me-2 text-warning"></i>Edit Drive</h3>
+            <form method="POST">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Job Title *</label>
+                        <input type="text" name="job_title" class="form-control" value="{{ drive.job_title }}" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Job Description *</label>
+                        <textarea name="job_description" class="form-control" rows="4" required>{{ drive.job_description }}</textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Eligibility Criteria</label>
+                        <textarea name="eligibility" class="form-control" rows="2">{{ drive.eligibility_criteria }}</textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Application Deadline</label>
+                        <input type="date" name="deadline" class="form-control" value="{{ drive.application_deadline }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Salary</label>
+                        <input type="text" name="salary" class="form-control" value="{{ drive.salary }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Location</label>
+                        <input type="text" name="location" class="form-control" value="{{ drive.location }}">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-warning me-2">Update Drive</button>
+                        <a href="/company/dashboard" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

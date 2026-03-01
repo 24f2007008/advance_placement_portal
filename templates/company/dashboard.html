@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Company Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-building me-2 text-primary"></i>{{ company.company_name }}</h2>
+    <a href="/company/drive/create" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>New Drive</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card p-3 stat-card">
+            <div class="text-muted small">Industry</div>
+            <div class="fw-bold">{{ company.industry or 'N/A' }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 stat-card" style="border-left-color:#28a745">
+            <div class="text-muted small">HR Contact</div>
+            <div class="fw-bold">{{ company.hr_contact }}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 stat-card" style="border-left-color:#FFC107">
+            <div class="text-muted small">Website</div>
+            <div class="fw-bold">{{ company.website or 'N/A' }}</div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mb-3">My Placement Drives</h4>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th><th>Job Title</th><th>Deadline</th><th>Location</th>
+                    <th>Salary</th><th>Applicants</th><th>Status</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in drives %}
+                <tr>
+                    <td>{{ d.id }}</td>
+                    <td><strong>{{ d.job_title }}</strong></td>
+                    <td>{{ d.application_deadline }}</td>
+                    <td>{{ d.location or '-' }}</td>
+                    <td>{{ d.salary or '-' }}</td>
+                    <td>
+                        <a href="/company/drive/{{ d.id }}/applications" class="badge bg-info text-decoration-none">
+                            {{ d.applicant_count }} applicants
+                        </a>
+                    </td>
+                    <td><span class="badge badge-{{ d.status }}">{{ d.status|capitalize }}</span></td>
+                    <td>
+                        <a href="/company/drive/{{ d.id }}/edit" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href="/company/drive/{{ d.id }}/action/close" class="btn btn-warning btn-sm"
+                           onclick="return confirm('Close this drive?')">Close</a>
+                        <a href="/company/drive/{{ d.id }}/action/delete" class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this drive?')">Del</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8" class="text-center text-muted py-4">No drives created yet. <a href="/company/drive/create">Create one!</a></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
